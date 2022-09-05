@@ -27,6 +27,7 @@ public class ServiceRequestRepository {
 
     public Object fetchResult(StringBuilder uri, Object request, Class clazz) {
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        System.out.println(request);
         return restTemplate.postForObject(uri.toString(), request, clazz);
     }
 }
