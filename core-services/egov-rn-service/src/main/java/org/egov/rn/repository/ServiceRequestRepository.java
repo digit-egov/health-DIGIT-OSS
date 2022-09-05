@@ -3,6 +3,7 @@ package org.egov.rn.repository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -14,6 +15,7 @@ public class ServiceRequestRepository {
     private ObjectMapper objectMapper;
     private RestTemplate restTemplate;
 
+    @Autowired
     public ServiceRequestRepository(ObjectMapper objectMapper, RestTemplate restTemplate) {
         this.objectMapper = objectMapper;
         this.restTemplate = restTemplate;

@@ -3,6 +3,7 @@ package org.egov.rn.service.dhis2.requests;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.egov.rn.service.DHIS2Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -131,7 +132,7 @@ public class CreateCampaginRequest {
         this.campaginIndicators = campaginIndicators;
     }
 
-    public DHis2Dataset getDHISRequest(){
+    public DHis2Dataset getDHISRequest(RestTemplate restTemplate){
         DHis2Dataset datasetRequest = new DHis2Dataset();
         datasetRequest.setDisplayName(this.getCampaginName());
         datasetRequest.setDisplayShortName(this.getCampaginName());
@@ -190,7 +191,7 @@ public class CreateCampaginRequest {
         this.getFormFields().forEach(dataSetElement -> {
 
             // GET REVERSE MAPPING
-            String dhis2FormId = new DHIS2Service().getDhis2FormId(dataSetElement);
+            String dhis2FormId = new DHIS2Service(restTemplate).getDhis2FormId(dataSetElement);
             DataSetElement dse = new DataSetElement().withAdditionalProperty("dataElement",new DataElement().withAdditionalProperty("id",dhis2FormId));
             dataSetElements.add(dse);
         });
