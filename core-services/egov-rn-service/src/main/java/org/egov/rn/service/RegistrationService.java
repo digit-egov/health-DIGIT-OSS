@@ -68,6 +68,4 @@ public class RegistrationService {
     public List<RegistrationData> getRegistrationPast(Long lastModifiedTime){
         return registrationRepository.getRegistrationPast(lastModifiedTime);
     }
-
-
 }

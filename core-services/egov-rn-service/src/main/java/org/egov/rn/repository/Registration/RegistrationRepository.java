@@ -19,7 +19,6 @@ public class RegistrationRepository {
     private JdbcTemplate jdbcTemplate;
 
 
-
     @Autowired
     private RegistrationDataRowsMapper rowMapper;
 
@@ -35,7 +34,6 @@ public class RegistrationRepository {
                 new Object[]{registrationId},
                 new BeanPropertyRowMapper(RegistrationData.class));
         return new ArrayList<RegistrationData>(Arrays.asList(registrationData));
-    }
 
 
     public List<RegistrationData> getRegistrationPast(Long lastModifiedTime) {

@@ -37,8 +37,7 @@ public class RegistrationApiController {
                         .responseInfo(ModelMapper.map(registrationRequest.getRequestInfo(), true))
                 .registrationDetails(registrationDetails).build());
     }
-
-
+    
     @RequestMapping(value = "/_list", method = RequestMethod.POST)
     public ResponseEntity<List<RegistrationData>> getAllRegistration() {
         return ResponseEntity.ok(registrationService.getAllRegistration());
@@ -50,7 +49,6 @@ public class RegistrationApiController {
             return ResponseEntity.ok(registrationService.getRegistrationBy(registrationSearchRequest.getRegistrationId()));
         }
         return ResponseEntity.ok(registrationService.getRegistrationPast(registrationSearchRequest.getLastModifiedTime()));
-
     }
 
 }
