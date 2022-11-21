@@ -33,6 +33,10 @@
         },
         {
           "id": "ws"
+        },
+        {
+          "name": "Health Registration",
+          "id": "health-registration"
         }
       ]
     },

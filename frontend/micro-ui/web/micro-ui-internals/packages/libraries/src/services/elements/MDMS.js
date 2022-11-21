@@ -1438,6 +1438,7 @@ export const MdmsService = {
     return MdmsService.getDataByCriteria(tenantId, getTradeUnitsDataList(tenantId, moduleCode, type, filter), moduleCode);
   },
   getMapConfig: (tenantId, moduleCode) => {
+    console.table( getDefaultMapConfig(tenantId, moduleCode))
     return MdmsService.getDataByCriteria(tenantId, getDefaultMapConfig(tenantId, moduleCode), moduleCode);
   },
   getUsageCategory: (tenantId, moduleCode, type) => {

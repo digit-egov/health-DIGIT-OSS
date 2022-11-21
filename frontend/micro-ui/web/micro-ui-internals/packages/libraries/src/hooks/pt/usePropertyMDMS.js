@@ -30,6 +30,7 @@ const usePropertyMDMS = (tenantId, moduleCode, type, config = {}) => {
     return useQuery("PT_FLOOR_LIST", () => MdmsService.getFloorList(tenantId, moduleCode), config);
   };
   const useMapConfig = () => {
+    console.log("MAP CONFIG CALLED")
     return useQuery("PT_MAP_CONFIG", () => MdmsService.getMapConfig(tenantId, moduleCode), config);
   };
 

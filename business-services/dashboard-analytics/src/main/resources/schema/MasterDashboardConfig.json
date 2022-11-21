@@ -950,48 +950,143 @@
       "title": "title",
       "visualizations": [
         {
-          "name": "DSS_OVERVIEW",
           "row": 1,
+          "name": "DSS_OVERVIEW",
           "vizArray": [
             {
-              "id": 111,
-              "name": "DSS_OVERVIEW",
+              "id": 1111,
+              "name": "NURT_PROJECT_STAUS",
               "vizType": "collection",
               "noUnit": true,
               "isCollapsible": false,
               "ref": {
-                "url": "overview",
+                "url": "",
                 "logoUrl": "",
                 "type": "internal"
               },
               "charts": [
                 {
-                  "id": "totalCollectionv2",
-                  "name": "DSS_TOTAL_COLLECTION",
+                  "id": "registrationMapsStatus",
+                  "name": "NURT_PROJECT_STAUS",
+                  "code": "",
+                  "chartType": "map",
+                  "filter": "",
+                  "headers": []
+                }
+
+              ]
+            },
+            {
+              "id": 143,
+              "name": "REGISTRATION",
+              "vizType": "collection",
+              "moduleLevel": "W&S",
+              "ref": {
+                "url": "health-registration",
+                "logoUrl": "",
+                "type": "internal"
+              },
+              "label": "HEALTH REGISTRATION",
+              "charts": [
+                {
+                  "id": "registrationtotalCollection",
+                  "name": "DSS_REGISTRATION_TOTAL_COLLECTION",
                   "code": "",
                   "chartType": "metric",
                   "filter": "",
                   "headers": []
-                },
+                }
+              ]
+            },
+            {
+              "id": 123,
+              "name": "DSS_TOTAL_CUMULATIVE_COLLECTION:_DEPARTMENT_WISE",
+              "dimensions": {
+                "height": 250,
+                "width": 4
+              },
+              "vizType": "chart",
+              "noUnit": true,
+              "isCollapsible": false,
+              "charts": [
                 {
-                  "id": "targetAchievedv2",
-                  "name": "DSS_TARGET_ACHIEVED",
+                  "id": "registrationtotalCollection",
+                  "name": "DSS_TOTAL_CUMULATIVE_COLLECTION:_DEPARTMENT_WISE",
                   "code": "",
-                  "chartType": "metric",
+                  "chartType": "donut",
                   "filter": "",
                   "headers": []
-                },
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "row": 3,
+          "name": "DSS_REVENUE",
+          "vizArray": [
+            {
+              "id": 231,
+              "name": "DSS_PT_KEY_FY_INDICATORS",
+              "dimensions": {
+                "height": 350,
+                "width": 12
+              },
+              "vizType": "chart",
+              "noUnit": false,
+              "isCollapsible": true,
+              "charts": [
                 {
-                  "id": "totalApplication",
-                  "name": "DSS_TOTAL_APPLICATION",
+                  "id": "registrationtotalCollection",
+                  "name": "DSS_PT_DEMAND_COLLECTION_BOUNDARY",
                   "code": "",
-                  "chartType": "metric",
+                  "chartType": "table",
                   "filter": "",
-                  "headers": []
+                  "headers": [],
+                  "tabName": "Boundary"
                 },
                 {
-                  "id": "slaAchieved",
-                  "name": "DSS_SLA_ACHIEVED",
+                  "id": "registrationtotalCollection",
+                  "name": "DSS_PT_DEMAND_COLLECTION_USAGETYPE",
+                  "code": "",
+                  "chartType": "table",
+                  "filter": "",
+                  "headers": [],
+                  "tabName": "Usage"
+                }
+              ]
+            }
+          ]
+        }
+
+      ]
+    },
+    {
+      "name": "DSS_HOME_DASHBOARD",
+      "id": "home2",
+      "isActive": "",
+      "style": "",
+      "title": "title",
+      "visualizations": [
+        {
+          "row": 1,
+          "name": "DSS_OVERVIEW",
+          "vizArray": [
+            {
+              "id": 143,
+              "name": "REGISTRATION",
+              "vizType": "collection",
+              "moduleLevel": "W&S",
+              "ref": {
+                "url": "health-registration",
+                "logoUrl": "",
+                "type": "internal"
+              },
+              "label": "HEALTH REGISTRATION",
+              "charts": [
+                {
+                  "id": "registrationtotalCollection",
+                  "name": "DSS_REGISTRATION_TOTAL_COLLECTION",
                   "code": "",
                   "chartType": "metric",
                   "filter": "",
@@ -1534,7 +1629,6 @@
         }
       ]
     },
-
     {
       "name": "DSS_PGR_DASHBOARD",
       "id": "ulb-pgr",
@@ -3781,6 +3875,144 @@
               ]
             }
 
+          ]
+        }
+      ]
+    },
+    {
+      "name": "DSS_REGISTRATION_DASHBOARD",
+      "id": "health-registration",
+      "isActive": "",
+      "style": "linear",
+      "visualizations": [
+        {
+          "row": 2,
+          "name": "HOUSEHOLD REGISTRATION",
+          "vizArray": [
+            {
+              "id": 1111,
+              "name": "NURT_PROJECT_STAUS",
+              "vizType": "collection",
+              "noUnit": true,
+              "isCollapsible": false,
+              "ref": {
+                "url": "",
+                "logoUrl": "",
+                "type": "internal"
+              },
+              "charts": [
+                {
+                  "id": "registrationMapsStatus",
+                  "name": "NURT_PROJECT_STAUS",
+                  "code": "",
+                  "chartType": "map",
+                  "filter": "",
+                  "headers": []
+                }
+
+              ]
+            }
+          ]
+        },
+        {
+          "row": 3,
+          "name": "HOUSEHOLD REGISTRATION",
+          "vizArray": [
+            {
+              "id": 112,
+              "name": "Hourly Registration",
+              "dimensions": {
+                "height": 350,
+                "width": 7
+              },
+              "vizType": "chart",
+              "label": "",
+              "noUnit": true,
+              "isCollapsible": false,
+              "charts": [
+                {
+                  "id": "registrationtotalCollectionTable",
+                  "name": "Weekly",
+                  "code": "",
+                  "chartType": "line",
+                  "filter": "",
+                  "headers": []
+                }
+              ]
+            },
+            {
+              "id": 323,
+              "name": "Status Pie chart",
+              "dimensions": {
+                "height": 250,
+                "width": 4
+              },
+              "vizType": "chart",
+              "label": "",
+              "noUnit": true,
+              "isCollapsible": true,
+              "charts": [
+                {
+                  "id": "registrationPie",
+                  "name": "Status Pie chart",
+                  "code": "",
+                  "chartType": "donut",
+                  "filter": "",
+                  "headers": []
+                }
+              ]
+            },
+            {
+              "id": 211,
+              "name": "DSS_OVERVIEW",
+              "dimensions": {
+                "height": 350,
+                "width": 5
+              },
+              "vizType": "metric-collection",
+              "noUnit": true,
+              "isCollapsible": false,
+              "label": "DSS_OVERVIEW",
+              "charts": [
+                {
+                  "id": "registrationtargetAchieved",
+                  "name": "DSS_W&S_TARGET_ACHIEVED",
+                  "code": "",
+                  "chartType": "metric",
+                  "filter": "",
+                  "headers": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "row": 4,
+          "name": "DSS_REVENUE",
+          "vizArray": [
+            {
+              "id": 231,
+              "name": "DSS_TL_KEY_FY_INDICATORS",
+              "dimensions": {
+                "height": 350,
+                "width": 12
+              },
+              "vizType": "chart",
+              "label": "",
+              "noUnit": false,
+              "isCollapsible": false,
+              "charts": [
+                {
+                  "id": "registrationTable",
+                  "name": "DSS_TL_DEMAND_COLLECTION_BOUNDARY",
+                  "code": "",
+                  "chartType": "table",
+                  "filter": "",
+                  "headers": [],
+                  "tabName": "Counter"
+                }
+              ]
+            }
           ]
         }
       ]

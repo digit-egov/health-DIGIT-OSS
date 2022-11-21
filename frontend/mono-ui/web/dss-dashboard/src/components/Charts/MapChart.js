@@ -2,7 +2,7 @@ import { withStyles } from "@material-ui/core/styles";
 import _ from "lodash";
 import React from "react";
 import { connect } from "react-redux";
-import { ComposableMap, Geographies, Geography } from "react-simple-maps";
+import { ComposableMap,   ZoomableGroup, Geographies, Geography } from "react-simple-maps";
 import ReactTooltip from "react-tooltip";
 import { bindActionCreators } from "redux";
 import APITransport from "../../actions/apitransport/apitransport";
@@ -89,7 +89,8 @@ class MapChart extends React.Component {
 
   onMouseEnter(geo, current = { value: "0" }, event) {
     this.setState({
-      tooltipContent: `${getLocaleLabels(`DSS_TB_${geo.properties.name}`)}: ${
+      tooltipContent: `${getLocaleLabels(`DSS_TB_${geo.properties.name}`)} ${geo.properties.name}
+      : ${
         current.value ? Number(current.value).toFixed() + " ULBs" : "NA"
       } `,
     });
@@ -162,8 +163,9 @@ class MapChart extends React.Component {
     const {classes}=this.props;
     const INDIA_TOPO_JSON =
       JSON.parse(sessionStorage.getItem("MAP_CONFIG")) || {};
-    const data = get(INDIA_TOPO_JSON, "objects.india.geometries", [])?.map(
+    const data = get(INDIA_TOPO_JSON, "objects.default.geometries", [])?.map(
       (ee) => {
+        console.log({ state: ee.properties.name, value: 0, id: ee.id })
         return { state: ee.properties.name, value: 0, id: ee.id };
       }
     );
@@ -173,6 +175,7 @@ class MapChart extends React.Component {
         return { ...acc };
       }, {}) || {};
 
+    console.log(DataObj)
     /*
         const colorScale = scaleQuantile()
             .domain(data.map(d => d.value))
@@ -268,12 +271,13 @@ class MapChart extends React.Component {
         <ReactTooltip>{this.state.tooltipContent}</ReactTooltip>
         <div style={{ height: "407px" }} className={"india-map-comp"}>
           <ComposableMap
-            projectionConfig={PROJECTION_CONFIG}
-            projection="geoMercator"
-            width={"240"}
-            height={"220"}
-            data-tip=""
+            // projectionConfig={PROJECTION_CONFIG}
+            // projection="geoMercator"
+            // width={"240"}
+            // height={"220"}
+            // data-tip=""
           >
+            <ZoomableGroup zoom={5}>
             <Geographies geography={INDIA_TOPO_JSON}>
               {({ geographies }) =>
                 geographies.map((geo) => {
@@ -299,8 +303,10 @@ class MapChart extends React.Component {
                     />
                   );
                 })
+
               }
-            </Geographies>
+              </Geographies>
+            </ZoomableGroup>
           </ComposableMap>
         </div>
         <span className="map-status">

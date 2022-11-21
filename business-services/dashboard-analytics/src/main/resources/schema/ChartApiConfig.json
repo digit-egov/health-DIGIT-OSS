@@ -3867,6 +3867,55 @@
     },
     "_comment": "W&S total collections "
   },
+  "registrationtotalCollection": {
+    "chartName": "DSS_REGISTRATION_TOTAL_COLLECTION",
+    "queries": [
+      {
+        "module": "W&S",
+        "indexName": "health-sync-log-v1",
+        "aggrQuery":"{\n    \"aggs\": {\n        \"Total Collection\": {\n            \"sum\": {\n                \"field\": \"Data.totalCount\"\n            }\n        }\n    }\n}",
+        "requestQueryMap": "{\"tenantId\" : \"cityname.keyword\", \"wardId\" : \"block.keyword\"}",
+        "dateRefField":""
+      }
+    ],
+    "translateTenantCode": true,
+    "chartType": "metric",
+    "valueType": "amount",
+    "action": "",
+    "drillChart": "none",
+    "aggregationPaths": [
+      "Total Collection"
+    ],
+    "insight": {
+    },
+    "_comment": "Registration total collections "
+  },
+  "registrationtotalCollectionTable": {
+    "chartName": "DSS_REGISTRATION_TOTAL_COLLECTION",
+    "queries": [
+      {
+        "module": "W&S",
+        "indexName": "health-sync-log-v1",
+        "aggrQuery":"{\n    \"aggs\": {\n        \"Water Sewerage\": {\n            \"date_histogram\": {\n                \"field\": \"Data.syncedAt\",\n                \"interval\": \"hour\"\n            },\n            \"aggs\": {\n                \"AGGR\": {\n                    \"filter\": {\n                        \"bool\": {\n                            \"must_not\": [\n                                {\n                                    \"terms\": {\n                                        \"status\": [\n                                            \"Cancelled\"\n                                        ]\n                                    }\n                                }\n                            ]\n                        }\n                    },\n                    \"aggs\": {\n                        \"approved\": {\n                            \"sum\": {\n                                \"field\": \"Data.totalCount\"\n                            }\n                        }\n                    }\n                }\n            }\n        }\n    }\n}",
+        "requestQueryMap": "{\"tenantId\" : \"cityname.keyword\"}",
+        "dateRefField":"Data.syncedAt"
+      }
+    ],
+    "translateTenantCode": true,
+    "chartType": "line",
+    "valueType": "amount",
+    "action": "",
+    "drillChart": "none",
+    "documentType": "_doc",
+    "aggregationPaths": [
+      "Water Sewerage"
+    ],
+    "isCumulative": true,
+    "interval": "hour",
+    "insight": {
+    },
+    "_comment": "Registration total collections "
+  },
   "wstotalCollection": {
     "chartName": "DSS_W&S_TOTAL_COLLECTION",
     "queries": [
@@ -3963,7 +4012,7 @@
         "dateRefField": "receiptdate",
         "requestQueryMap": "{\"tenantId\" : \"cityname.keyword\", \"wardId\" : \"block.keyword\"}",
         "indexName": "receipts-consumers",
-        "aggrQuery": "{\"aggs\":{\"Water Sewerage\":{\"date_histogram\":{\"field\":\"receiptdate\",\"interval\":\"intervalvalue\"},\"aggs\":{\"AGGR\":{\"filter\":{\"bool\":{\"must_not\":[{\"terms\":{\"status\":[\"Cancelled\"]}}]}},\"aggs\":{\"approved\":{\"sum\":{\"field\":\"totalamount\"}}}}}}}}"
+        "aggrQuery": "{\n    \"aggs\": {\n        \"Water Sewerage\": {\n            \"date_histogram\": {\n                \"field\": \"Data.syncedAt\",\n                \"interval\": \"hour\"\n            },\n            \"aggs\": {\n                \"approved\": {\n                    \"sum\": {\n                        \"field\": \"Data.totalCount\"\n                    }\n                }\n            }\n        }\n    }\n}"
       }
     ],
     "translateTenantCode": true,
@@ -4727,7 +4776,6 @@
       "Pending gt 3 and lt 7 days",
       "Pending gt 7 and lt 15 days",
       "Pending gt 15 days"
-
     ],
     "computedFields": [
       {
@@ -4783,6 +4831,168 @@
       }
     ],
 
+    "insight": {
+    },
+    "_comment": ""
+  },
+  "registrationtargetAchieved": {
+    "chartName": "DSS_REGISTRATION_TARGET_ACHIEVED",
+    "queries": [
+      {
+        "module": "COMMON",
+        "requestQueryMap": "{\r\n  \"module\" : \"businessService.keyword\", \n\"tenantId\" : \"tenantIdForMunicipalCorporation\"}",
+        "dateRefField": "",
+        "indexName": "health-sync-log-v1",
+        "aggrQuery": "{\"aggs\":{\"Actual collection\":{\"sum\":{\"field\":\"Data.totalCount\"}}}}"
+      },
+      {
+        "module": "COMMON",
+        "requestQueryMap": "{\"wardId\" : \"domainObject.ward.name.keyword\",\r\n  \"district\" : \"dataObject.tenantData.cityDistrictCode\", \"module\" : \"dataObject.Bill.billDetails.businessService.keyword\", \n\"tenantId\" : \"dataObject.tenantId\"}",
+        "dateRefField": "Data.syncedAt",
+        "indexName": "health-sync-log-v1",
+        "aggrQuery": "{\n    \"aggs\": {\n      \"AGGR\": {\n        \"filter\": {\n          \"bool\": {\n            \"must_not\": [\n              { \"term\": { \"Data.status\": \"cancelled\" } }\n            ]\n          }\n        },\n        \"aggs\": {\n          \"Total Collection\": {\n            \"sum\": { \"field\": \"Data.totalCount\" }\n          }\n        }\n      }\n    }\n  }"
+      }
+
+    ],
+    "chartType": "metric",
+    "valueType": "percentage",
+    "drillChart": "none",
+    "documentType": "_doc",
+    "action": "percentage",
+    "aggregationPaths": [
+      "Total Collection",
+      "Actual collection"
+    ],
+    "insight": {
+      "chartResponseMap" : "registrationtargetAchieved",
+      "action" : "differenceOfNumbers",
+      "upwardIndicator" : "positive",
+      "downwardIndicator" : "negative",
+      "textMessage" : "$indicator$value% than last $insightInterval",
+      "colorCode" : "#228B22",
+      "insightInterval" : "hour"
+    },
+    "_comment": " "
+  },
+  "registrationPie": {
+    "chartName": "Status Pie chart",
+    "queries": [
+      {
+        "module": "COMMON",
+        "requestQueryMap": "{\"module\" : \"dataObject.paymentDetails.businessService.keyword\", \"tenantId\" : \"dataObject.tenantId\"}",
+        "dateRefField": "syncedAt",
+        "indexName": "health-sync-log-v4",
+        "aggrQuery": "{\n  \"aggs\": {\n    \"License Instrument Type\": {\n      \"terms\": {\n        \"field\": \"status.keyword\"\n      },\n      \"aggs\": {\n        \"Licens Issued\": {\n          \"sum\": {\n            \"field\": \"totalCount\"\n          }\n        }\n      }\n    }\n  }\n}\n"
+      }
+    ],
+    "chartType": "pie",
+    "valueType": "number",
+    "action": "",
+    "documentType": "_doc",
+    "drillChart": "none",
+    "aggregationPaths": [
+      "License Instrument Type"
+    ],
+    "insight": {
+    },
+    "_comment": " License Application which are issued by License Type"
+  },
+  "registrationTable": {
+    "chartName": "DSS_TL_KEY_FY_INDICATORS",
+    "queries": [
+      {
+        "module": "COMMON",
+        "requestQueryMap": "{\"wardId\" : \"domainObject.ward.name.keyword\",\"module\" : \"dataObject.paymentDetails.businessService.keyword\", \"tenantId\" : \"dataObject.tenantId\" }",
+        "dateRefField": "syncedAt",
+        "indexName": "health-sync-log-v4",
+        "aggrQuery": "{\n    \"aggs\": {\n        \"AGGR\": {\n            \"filter\": {\n                \"bool\": {\n                    \"must_not\": [\n                        {\n                            \"terms\": {\n                                \"status.keyword\": [\n                                    \"Cancelled\"\n                                ]\n                            }\n                        }\n                    ]\n                }\n            },\n            \"aggs\": {\n                \"Total Collection\": {\n                    \"sum\": {\n                        \"field\": \"totalCount\"\n                    }\n                },\n                \"Transactions\": {\n                    \"value_count\": {\n                        \"field\": \"syncId.keyword\"\n                    }\n                },\n                \"Total Licence Issued\": {\n                    \"value_count\": {\n                        \"field\": \"status.keyword\"\n                    }\n                }\n            }\n        }\n    }\n}"
+      },
+      {
+        "module": "COMMON",
+        "requestQueryMap": "{\"module\" : \"businessService.keyword\", \"tenantId\" : \"tenantIdForMunicipalCorporation.keyword\"}",
+        "dateRefField": "",
+        "indexName": "health-sync-log-v4",
+        "aggrQuery": "{\n  \"aggs\": {\n    \"Target Collection\": {\n      \"sum\": { \"field\": \"errorCount\" }\n    }\n  }\n}\n"
+      }
+    ],
+    "isMdmsEnabled": true,
+    "filterKeys": [
+      {"key": "tenantId", "column": "DDRs"}
+    ],
+    "isPostResponseHandler": true,
+    "postAggregationTheory" : "repsonseToDifferenceOfDates",
+    "chartType": "table",
+    "valueType": "number",
+    "drillChart": "registrationTable",
+    "documentType": "_doc",
+    "action": "",
+    "plotLabel": "DDRs",
+    "aggregationPaths": [
+      "Total Collection",
+      "Transactions",
+      "Total Licence Issued",
+      "Target Collection"
+    ],
+    "pathDataTypeMapping": [
+      {
+        "Total Collection": "amount"
+      },
+      {
+        "Transactions": "number"
+      },
+      {
+        "Total Licence Issued": "number"
+      },
+      {
+        "Target Collection": "amount"
+      }
+    ],
+    "insight": {
+    },
+    "_comment": ""
+  },
+  "registrationMapsStatus": {
+    "chartName": "NURT_PROJECT_STAUS",
+    "queries": [
+      {
+        "module": "COMMON",
+        "requestQueryMap": "{\"state\" : \"state.keyword\",\"ulb\" : \"ulb.keyword\"}",
+        "dateRefField": "date",
+        "indexName": "health-map",
+        "aggrQuery": "{\n  \"aggs\": {\n    \"states\": {\n      \"terms\": { \"field\": \"state.keyword\", \"size\": 100 },\n      \"aggs\": {\n        \"latest\": {\n          \"terms\": { \"field\": \"date\", \"order\": { \"_term\": \"desc\" }, \"size\": 1 },\n          \"aggs\": {\n            \"Status\": { \"terms\": { \"field\": \"status.keyword\" } },\n            \"totalUlbs\": { \"avg\": { \"field\": \"totalUlbCount\" } },\n            \"liveUlbs\": { \"avg\": { \"field\": \"totalLiveUlbsCount\" } }\n          }\n        }\n      }\n    }\n  }\n}"
+      }
+    ],
+    "isMdmsEnabled": false,
+    "isPostResponseHandler": true,
+    "chartType": "table",
+    "valueType": "number",
+    "drillChart": "registrationMapsStatus",
+    "drillFields": [
+      "states"
+    ],
+    "documentType": "_doc",
+    "action": "",
+    "aggregationPaths": [
+      "states",
+      "Status",
+      "totalUlbs",
+      "liveUlbs"
+    ],
+    "plotLabel": "states",
+    "pathDataTypeMapping": [
+      {
+        "states": "string"
+      },
+      {
+        "Status": "string"
+      },
+      {
+        "totalUlbs": "number"
+      },
+      {
+        "liveUlbs": "number"
+      }
+    ],
     "insight": {
     },
     "_comment": ""
